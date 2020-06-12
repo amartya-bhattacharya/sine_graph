@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sine Grapher</title>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.2.min.js"
+            crossorigin="anonymous"></script>
+    <script>function outputUpdate(freq) {
+        document.querySelector('#selected-freq').value = freq;
+    }
+    </script>
+</head>
+<body>
+This web page visualizes a sine function.
+
+<form method=post action="">
+    <table>
+        {% for field in form %}
+            <tr>
+                <td class="name">{{ field.name }} </td>
+                <td>{{ field(size=12) }}</td>
+                <td>{{ field.label }}</td>
+                <p>
+                    {{ form.freq.label }}:
+                    {{ form.freq(min=0.01, max=3.14, oninput="outputUpdate(value)") }}
+                    <output for="freq" id="selected-freq">{{ form.freq.data }}</output>
+                </p>
+                {% if field.errors %}
+                    <td>
+                        <ul class=errors>
+                            {% for error in field.errors %}
+                                <li><span style="color: red; ">{{ error }}</span></li>
+                            {% endfor %}</ul>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    <p><input type="submit" value="Compute"></form>
+
+<p>
+    {% if result != None %}
+        <!-- script and div elements for Bokeh plot -->
+        {{ result[0]|safe }}
+        {{ result[1]|safe }}
+    {% endif %}
+</p>
+</body>
+</html>
