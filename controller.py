@@ -12,10 +12,11 @@ def index():
     form = InputForm(request.form)
     # Checks for input
     if request.method == 'POST' and form.validate():
-        # Creates sine graph given inputs
+        # Creates sine graph from compute.py given inputs
         result = compute(form.amp.data, form.freq.data, form.x_max.data)
     else:
         result = None
+        # Sends graph to view.html for displaying
     return render_template('view.html', form=form,
                            result=result)
 
